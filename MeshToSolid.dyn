@@ -1,0 +1,360 @@
+{
+  "Uuid": "227d5434-443d-4506-a34c-b9e662a89bf4",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "MeshToSolidExample",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "C:\\Users\\mcavala\\OneDrive - Umich\\Documents\\Topography 2020\\ept_Zag20_terzofotopiano_pointcloud-las\\models  25832\\ZAG2020_test1164Manifold_filled.obj",
+      "InputValue": ".\\ZAG2020_test1164Manifold_filled.obj",
+      "NodeType": "ExtensionNode",
+      "Id": "d6029971b57d4adba516162757d58dbc",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1a9a06436ad849849e6215e9c0b24e86",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its file path."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.Dynamo.MeshToolkit.Mesh.ImportFile@string",
+      "Id": "751ca82c9ac543029bf661d685a48122",
+      "Inputs": [
+        {
+          "Id": "3537fef1186040cc9ed68015c18af337",
+          "Name": "fileName",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d36e18217cd24a6683be1facaa9b9368",
+          "Name": "Mesh[]",
+          "Description": "Mesh[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Imports a file, parsing it into a number of Meshes. Currently supported formats are: .mix -- Meshmixer .obj -- Wavefront\n\nMesh.ImportFile (fileName: string): Mesh[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.Dynamo.MeshToolkit.Mesh.Triangles",
+      "Id": "f90ea63dd9e7409f8685c4e4bd9ec5a0",
+      "Inputs": [
+        {
+          "Id": "19d188d5f85b4284a397501bd7321657",
+          "Name": "mesh",
+          "Description": "Autodesk.Dynamo.MeshToolkit.Mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9c209db0dbb24e65ae2c9c5915f1f45c",
+          "Name": "Surface[]",
+          "Description": "Surface[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Converts the Mesh faces to Surface patches, and returns them. Note: this method can generate A LOT of heavy Surfaces, and may slow down Dynamo with large meshes.\n\nMesh.Triangles ( ): Surface[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Solid.ByJoinedSurfaces@Autodesk.DesignScript.Geometry.Surface[]",
+      "Id": "d4d64d2cba0a422eb426848a269b9cd1",
+      "Inputs": [
+        {
+          "Id": "cf72ef4f0ee44bb59cdcd33cc5d83e4e",
+          "Name": "facesOfSolid",
+          "Description": "Surface[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ef86046ea42d428ba4d01faf36f7870e",
+          "Name": "Solid",
+          "Description": "Solid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create a solid by specifying it's component faces as Surfaces.\n\nSolid.ByJoinedSurfaces (facesOfSolid: Surface[]): Solid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Solid.Volume",
+      "Id": "20e1845b44ee47038d419d5b9712d70d",
+      "Inputs": [
+        {
+          "Id": "72f916e883ae4952b609038043553653",
+          "Name": "solid",
+          "Description": "Autodesk.DesignScript.Geometry.Solid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3af57e4cd67d48adb9195e3c1ed3ed7a",
+          "Name": "double",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the total volume of the Solid\n\nSolid.Volume: double"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.Dynamo.MeshToolkit.Mesh.Volume",
+      "Id": "20aea0eacb5740c1b931753c7ecd6ebe",
+      "Inputs": [
+        {
+          "Id": "9e43ac05c56c4c90894ac0995158f14e",
+          "Name": "mesh",
+          "Description": "Autodesk.Dynamo.MeshToolkit.Mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dadd4778d028405ea8ba93ba3e5f5836",
+          "Name": "volume",
+          "Description": "volume",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the volume of the provided Mesh\n\nMesh.Volume: double"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1a9a06436ad849849e6215e9c0b24e86",
+      "End": "3537fef1186040cc9ed68015c18af337",
+      "Id": "540d2eefc3b742ea9972f330665e5531",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d36e18217cd24a6683be1facaa9b9368",
+      "End": "19d188d5f85b4284a397501bd7321657",
+      "Id": "54f5c13d65ea479b87fb096b5e55ceed",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d36e18217cd24a6683be1facaa9b9368",
+      "End": "9e43ac05c56c4c90894ac0995158f14e",
+      "Id": "4641a06ca2164a5e8dfd9c3aba095003",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9c209db0dbb24e65ae2c9c5915f1f45c",
+      "End": "cf72ef4f0ee44bb59cdcd33cc5d83e4e",
+      "Id": "ebfc2451b3c74bd3885ce4012dcf53b6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ef86046ea42d428ba4d01faf36f7870e",
+      "End": "72f916e883ae4952b609038043553653",
+      "Id": "47d162caed9d44298382746d6e4cdd4a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "MeshToolkit",
+      "Version": "3.0.0",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "751ca82c9ac543029bf661d685a48122",
+        "f90ea63dd9e7409f8685c4e4bd9ec5a0",
+        "20aea0eacb5740c1b931753c7ecd6ebe"
+      ]
+    }
+  ],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.14",
+      "Data": {}
+    }
+  ],
+  "Author": "None provided",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.14.0.4641",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 103.59601593017578,
+      "EyeY": 39.342449188232422,
+      "EyeZ": -34.730037689208984,
+      "LookX": -0.0010833740234375,
+      "LookY": -0.005889892578125,
+      "LookZ": -0.007045745849609375,
+      "UpX": -0.069225192070007324,
+      "UpY": 0.88941627740859985,
+      "UpZ": -0.451825886964798
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Name": "File Path",
+        "ShowGeometry": true,
+        "Id": "d6029971b57d4adba516162757d58dbc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -547.00940225785189,
+        "Y": -384.26421608161957
+      },
+      {
+        "Name": "Mesh.ImportFile",
+        "ShowGeometry": true,
+        "Id": "751ca82c9ac543029bf661d685a48122",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -108.67076375385216,
+        "Y": -371.45792741283907
+      },
+      {
+        "Name": "Mesh.Triangles",
+        "ShowGeometry": true,
+        "Id": "f90ea63dd9e7409f8685c4e4bd9ec5a0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 183.87208406713569,
+        "Y": -365.77188547823232
+      },
+      {
+        "Name": "Solid.ByJoinedSurfaces",
+        "ShowGeometry": true,
+        "Id": "d4d64d2cba0a422eb426848a269b9cd1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 456.18221339789193,
+        "Y": -371.65996998640765
+      },
+      {
+        "Name": "Solid.Volume",
+        "ShowGeometry": true,
+        "Id": "20e1845b44ee47038d419d5b9712d70d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 868.03696936817551,
+        "Y": -379.31572931065244
+      },
+      {
+        "Name": "Mesh.Volume",
+        "ShowGeometry": true,
+        "Id": "20aea0eacb5740c1b931753c7ecd6ebe",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -185.59545488798892,
+        "Y": -12.775851583123142
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "9a627bc7fcf64d92ab2fe798fe83f113",
+        "Title": "Mesh to Solid",
+        "DescriptionText": "<Double click here to edit group description>",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "751ca82c9ac543029bf661d685a48122",
+          "f90ea63dd9e7409f8685c4e4bd9ec5a0",
+          "d4d64d2cba0a422eb426848a269b9cd1"
+        ],
+        "HasNestedGroups": false,
+        "Left": -118.67076375385216,
+        "Top": -444.85996998640763,
+        "Width": 833.652977151744,
+        "Height": 210.88808450817533,
+        "FontSize": 36.0,
+        "InitialTop": -371.65996998640765,
+        "InitialHeight": 150.88808450817533,
+        "TextblockHeight": 63.199999999999996,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 248.4731551520911,
+    "Y": 288.64973619206336,
+    "Zoom": 0.10000759388597057
+  }
+}
